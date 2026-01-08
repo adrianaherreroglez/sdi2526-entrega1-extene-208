@@ -1,0 +1,41 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head th:replace="fragments/head"/>
+
+<body>
+<nav th:replace="fragments/nav"/>
+
+<div class="container" id="main-container">
+    <h2 th:text="#{route.vehiclelist.title}"></h2>
+    <p th:text="#{route.vehiclelist.subtitle}"></p>
+    <div class="table-responsive" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+        <table class="table table-hover" id="listForVehicleTable">
+            <thead>
+            <tr>
+                <th scope="col" th:text="#{route.vehiclelist.id}"></th>
+                <th scope="col" th:text="#{route.vehiclelist.start}"></th>
+                <th scope="col" th:text="#{route.vehiclelist.employee}"></th>
+                <th scope="col" th:text="#{route.vehiclelist.duration}"></th>
+                <th scope="col" th:text="#{route.vehiclelist.distance}"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="route : ${routes}">
+                <td th:text="${route.id}"></td>
+                <td th:text="${route.getStartTime()}"></td>
+                <td th:text="${route.getEmployee()}"></td>
+                <td th:text="${route.getDuration()}"></td>
+                <td th:text="${route.getTraveledDistance()}"></td>
+
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div th:if="${#lists.isEmpty(routes)}"> </div>
+    <footer th:replace="fragments/pagination"/>
+</div>
+<footer th:replace="fragments/footer"/>
+</body>
+</html>

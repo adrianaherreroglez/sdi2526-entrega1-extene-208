@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+<head th:replace="fragments/head"/>
+<body>
+<!-- Barra de Navegación superior -->
+<nav th:replace="fragments/nav"/>
+
+<div class="container" id="main-container">
+    <h2 th:text="#{add.vehicle}"></h2>
+    <form class="form-horizontal" method="post" action="/vehicle/add" th:object="${vehicle}">
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="plate" th:text="#{add.vehicle.plate}"></label>
+            <div class="col-sm-10">
+                <input class="form-control" id="plate" name="plate" placeholder="1234BCD"
+                        th:value="${vehicle.plate}" type="text"/>
+                <span class="text-danger" th:if="${#fields.hasErrors('plate')}" th:errors="*{plate}"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="chassisNumber" th:text="#{add.vehicle.chassisNumber}"></label>
+            <div class="col-sm-10">
+                <input class="form-control" id="chassisNumber" name="chassisNumber" placeholder=""
+                        th:value="${vehicle.chassisNumber}" type="text"/>
+                <span class="text-danger" th:if="${#fields.hasErrors('chassisNumber')}" th:errors="*{chassisNumber}"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="brand" th:text="#{add.vehicle.brand}"></label>
+            <div class="col-sm-10">
+                <input class="form-control" id="brand" name="brand" placeholder=""
+                        th:value="${vehicle.brand}" type="text"/>
+                <span class="text-danger" th:if="${#fields.hasErrors('brand')}" th:errors="*{brand}"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="model" th:text="#{add.vehicle.model}"></label>
+            <div class="col-sm-10">
+                <input class="form-control" id="model" name="model" placeholder=""
+                        th:value="${vehicle.model}" type="text"/>
+                <span class="text-danger" th:if="${#fields.hasErrors('model')}" th:errors="*{model}"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="fuelType" th:text="#{add.vehicle.fuelType}"></label>
+            <div class="col-sm-10">
+                <select id="fuelType" class="form-control" name="fuelType" required="true">
+                    <option value="" disabled selected th:text="#{add.vehicle.select}"></option>
+                    <option th:each="fuel : ${fuelTypes}" th:value="${fuel}" th:text="${fuel}"></option>
+                </select>
+                <span class="text-danger" th:if="${#fields.hasErrors('fuelType')}"></span>
+
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-primary" th:text="#{add.vehicle.send}"></button>
+            </div>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>

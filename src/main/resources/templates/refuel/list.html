@@ -1,0 +1,46 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head th:replace="fragments/head"/>
+
+<body>
+<nav th:replace="fragments/nav"/>
+
+<div class="container" id="main-container">
+    <h2 th:text="#{refuel.title}"></h2>
+    <p th:text="#{refuel.list.title1} +' '+ ${plate} +' '+ #{refuel.list.title2}"></p>
+    <div class="table-responsive" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+        <table class="table table-hover" id="refuelList">
+            <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col" th:text="#{refuel.date}">Fecha y hora</th>
+                <th scope="col" th:text="#{refuel.odometer}">Odómetro</th>
+                <th scope="col" th:text="#{refuel.fuel}">Combustible</th>
+                <th scope="col" th:text="#{refuel.stationName}">Estación</th>
+                <th scope="col" th:text="#{refuel.pricePerUnit}">Precio por unidad</th>
+                <th scope="col" th:text="#{refuel.quantity}">Cantidad</th>
+                <th scope="col" th:text="#{refuel.totalPrice}">Precio total</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="refuel : ${refuelsList}">
+                <td th:text="${refuel.getId()}">Id</td>
+                <td th:text="${refuel.getRefuelDate()}">Fecha y hora</td>
+                <td th:text="${refuel.getOdometerRefuelValue()}">Odométro</td>
+                <td th:text="${refuel.getVehicle().getFuelType()}">Combustible</td>
+                <td th:text="${refuel.getStationName()}">Estación</td>
+                <td th:text="${refuel.getPricePerUnit()} + ' '+#{refuel.currency}">Precio por unidad</td>
+                <td th:text="${refuel.getQuantity()}">Cantidad</td>
+                <td th:text="${refuel.getTotalPrice()} + ' '+#{refuel.currency}">Precio total</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div th:if="${#lists.isEmpty(refuelsList)}"> </div>
+    <footer th:replace="fragments/pagination"/>
+</div>
+<footer th:replace="fragments/footer"/>
+</body>
+</html>

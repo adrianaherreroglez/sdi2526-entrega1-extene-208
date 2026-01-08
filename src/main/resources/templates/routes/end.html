@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head"/>
+<body>
+<!-- Barra de Navegación superior -->
+<nav th:replace="fragments/nav"/>
+<div class="container">
+    <h2 th:text="#{route.end.title}"></h2>
+    <form class="form-horizontal" method="post" action="/routes/end" th:object="${route}">
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="odometerFinalValue" th:text="#{route.end.odometer0}"></label>
+            <div class="col-sm-10">
+                <!-- Aquí el cambio clave: usar th:field en vez de name/id manual -->
+                <input type="text" class="form-control" id="odometerFinalValue" th:field="*{odometerFinalValue}" />
+                <span class="text-danger" th:if="${#fields.hasErrors('odometerFinalValue')}" th:errors="*{odometerFinalValue}"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="observations" th:text="#{route.end.observations}"></label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="observations" th:field="*{observations}" />
+                <span class="text-danger" th:if="${#fields.hasErrors('observations')}" th:errors="*{observations}"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-primary" th:text="#{route.end.send}"></button>
+            </div>
+        </div>
+    </form>
+
+</div>
+<footer th:replace="fragments/footer"/>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head"/>
+<body>
+<!-- Barra de Navegación superior -->
+<nav th:replace="fragments/nav"/>
+<div class="container">
+    <h2 th:text="#{logs.list}"></h2>
+    <p th:text="#{logs.list.message}"></p>
+    <div class="row">
+        <!-- Filtro de tipo de log -->
+        <div class="col-sm-3">
+            <label for="logFilter" class="control-label" th:text="#{log.filter}">Filtrar por tipo de log:</label>
+        </div>
+        <div class="col-sm-3">
+            <select id="logFilter" class="form-control">
+                <option value="ALL" th:text="#{log.all}">Todos</option>
+                <option value="PET" th:text="#{log.requests}">Peticiones</option>
+                <option value="ALTA" th:text="#{log.add.employee}">Altas de empleados</option>
+                <option value="LOGIN-EX" th:text="#{log.login.ex}">Inicios de sesión exitosos</option>
+                <option value="LOGIN-ERR" th:text="#{log.login.err}">Inicios de sesión fallidos</option>
+                <option value="LOGOUT" th:text="#{log.logout.log}">Cierres de sesión</option>
+            </select>
+            <script th:inline="javascript">
+                /*<![CDATA[*/
+                $("#logFilter").change(function () {
+                    let numberPage = [[${param.page}]];
+                    var logType = document.getElementById("logFilter").value;
+                    var url = "/log/list/" + logType;
+                    if (numberPage != null) {
+                        url += "?page=" + numberPage[0];
+                    }
+                    $("#logsTable").load(url.toString());
+                });
+                /*]]>*/
+            </script>
+        </div>
+        <div class="col-sm-4">
+            <!-- Botón para borrar logs -->
+            <button id="deleteLogs" class="btn btn-primary" th:text="#{log.delete}">Borrar logs filtrados</button>
+            <script>
+                /*<![CDATA[*/
+                $("#deleteLogs").click(function () {
+                    var logType = document.getElementById("logFilter").value;  // Obtén el valor del filtro
+                    var url = "/log/delete/" + logType;  // Construye la URL para eliminar logs
+
+                    // Realiza la redirección al backend para borrar los logs
+                    window.location.href = url;  // Redirige a la URL de eliminación
+                });
+                /*]]>*/
+            </script>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table th:replace="fragments/logsTable"></table>
+    </div>
+    <footer th:replace="fragments/pagination"/>
+</div>
+<footer th:replace="fragments/footer"/>
+</body>
+</html>

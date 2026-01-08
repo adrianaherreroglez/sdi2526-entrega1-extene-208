@@ -1,0 +1,107 @@
+<!-- nav.html -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary"
+     xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+    <a class="navbar-brand" href="#"></a>
+    <img src="/images/flotaneitorIcon.png" alt="logo"/>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#myNavbar"
+            aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="myNavbar">
+        <ul class="navbar-nav mr-auto" sec:authorize="isAuthenticated()">
+            <li class="nav-item ">
+                <a class="nav-link" href="/home">Home<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item dropdown" sec:authorize="hasRole('ROLE_ADMIN')">
+                <a class="nav-link dropdown-toggle" href="#" id="employeesDropDown" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false" th:text="#{navbar.employees}">
+                </a>
+                <div class="dropdown-menu" aria-labelledby="employeesDropDown">
+                    <a class="dropdown-item" href="/employee/add" sec:authorize="hasRole('ROLE_ADMIN')"
+                       th:text="#{navbar.add.employees}"></a>
+                    <a class="dropdown-item" href="/employee/list" sec:authorize="hasRole('ROLE_ADMIN')"
+                       th:text="#{navbar.list.employees}"></a>
+                </div>
+            </li>
+            <li class="nav-item dropdown" sec:authorize="hasRole('ROLE_ADMIN')">
+                <a class="nav-link dropdown-toggle" href="#" id="logsDropDown" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false" th:text="#{navbar.logs}">
+                </a>
+                <div class="dropdown-menu" aria-labelledby="employeesDropDown">
+                    <a class="dropdown-item" href="/log/list" sec:authorize="hasRole('ROLE_ADMIN')"
+                       th:text="#{navbar.list.logs}"></a>
+                </div>
+            </li>
+            <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" th:text="#{list.vehicle}"></a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/vehicle/list" sec:authorize="hasRole('ROLE_ADMIN')" th:text="#{see.vehicle}"></a>
+                    <a class="dropdown-item" href="/vehicle/add" sec:authorize="hasRole('ROLE_ADMIN')" th:text="#{add.vehicle}"></a>
+                    <a class="dropdown-item" href="/vehicle/list/available" sec:authorize="hasRole('ROLE_STANDARD')" th:text="#{list.vehicle.available}"></a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="refuelDropdown" role="button" data-toggle="dropdown"
+                   aria-hashpopup="true" aria-expanded="false" th:text="#{navbar.refuel}"></a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/refuel/add" th:text="#{navbar.add.refuel}"></a>
+                    <a class="dropdown-item" href="/vehicle/list/available" th:text="#{navbar.plate.list}"></a>
+                </div>
+            </li>
+            <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
+                <a class="nav-link dropdown-toggle" href="#" id="routesDropdown" role="button"
+                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Trayectos</a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/routes/add">Iniciar trayecto</a>
+                    <a class="dropdown-item" href="/routes/list">Mis trayectos</a>
+                </div>
+            </li>
+        </ul>
+        <ul class="navbar-nav justify-content-end">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="btnLanguage" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    <span th:text="#{language.change}"></span>
+                </a>
+                <div id="languageDropdownMenuButton" class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" id="btnEnglish" value="EN">
+                        <img th:src="@{/images/if_uk_flag.png}" style="border: 0; float: left; margin-right: 15px"/>
+                        <span th:text="#{language.en}">Inglés</span>
+                    </a>
+                    <a class="dropdown-item" id="btnSpanish" value="ES">
+                        <img th:src="@{/images/if_spain_flag.png}" style="border: 0; float: left; margin-right: 15px"/>
+                        <span th:text="#{language.es}">Español</span>
+                    </a>
+                    <a class="dropdown-item" id="btnItalian" value="IT">
+                        <img th:src="@{/images/if_italian_flag.png}"
+                             style="border: 0; float: left; margin-right: 15px"/>
+                        <span th:text="#{language.it}">Italiano</span>
+                    </a>
+                </div>
+            </li>
+            <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
+                <a class="nav-link dropdown-toggle" href="#" id="btnUser" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    <i class="bi bi-person"></i>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="employeesDropDown">
+                    <a class="dropdown-item" href="/changePassword"
+                       th:text="#{navbar.change.password}"></a>
+                </div>
+            </li>
+            <li class="nav-item" sec:authorize="!isAuthenticated()"><a class="nav-link" href="/identificarse"></a>
+                <a class="nav-link" href="/login">
+                    <i class='fas fa-sign-in-alt' style='font-size:16px'></i>
+                    <span th:text="#{navbar.login.message}"></span>
+                </a>
+            </li>
+            <li sec:authorize="isAuthenticated()" class="nav-item">
+                <a class="nav-link" href="/logout">
+                    <i class='fas fa-sign-out-alt' style='font-size:16px'></i>
+                    <span th:text="#{logout.message}"></span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head">
+
+</head>
+
+<body>
+<nav th:replace="fragments/nav"/>
+
+<div class="container" id="main-container">
+    <h2 th:text="#{route.start.title}">Iniciar trayecto</h2>
+    <form class="form-horizontal" method="post" action="/routes/add" th:object="${route}">
+        <div class="col-sm-10">
+            <label class="control-label col-sm-2" for="matricula" th:text="#{add.vehicle.plate}">Matrícula:</label>
+            <div class="col-sm-10">
+                <select id="matricula" class="form-control" name="matricula" required="true">
+                    <option th:each="vehicle : ${vehicles}"
+                            th:value="${vehicle.plate}"
+                            th:text="${vehicle.plate}"></option>
+                </select>
+                <span th:if="${#fields.hasErrors('vehicle.plate')}"
+                      th:errors="*{vehicle.plate}"
+                      class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-primary" th:text="#{add.route.send}">Crear Route</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<footer th:replace="fragments/footer"/>
+</body>
+</html>

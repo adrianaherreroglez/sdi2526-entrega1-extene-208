@@ -1,0 +1,48 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head th:replace="fragments/head"/>
+
+<body>
+<nav th:replace="fragments/nav"/>
+
+<div class="container" id="main-container">
+    <h2 th:text="#{route.list}"></h2>
+    <p th:text="#{route.list.p1}"> </p>
+    <div class="table-responsive" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+        <table class="table table-hover" id="routesForEmployeeTable">
+            <thead>
+            <tr>
+                <th scope="col" th:text="#{route.list.id}"></th>
+                <th scope="col" th:text="#{route.list.start}"></th>
+                <th scope="col" th:text="#{route.list.plate}"></th>
+                <th scope="col" th:text="#{route.list.duration}"></th>
+                <th scope="col" th:text="#{route.list.odometer0}"></th>
+                <th scope="col" th:text="#{route.list.odometerf}"></th>
+                <th scope="col"> </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="route : ${routes}">
+                <td th:text="${route.id}"></td>
+                <td th:text="${route.getStartTime()}"></td>
+                <td th:text="${route.getVehicle().getPlate()}"></td>
+                <td th:text="${route.getDuration()}"></td>
+                <td th:text="${route.getOdometerInitValue()}"></td>
+                <td th:text="${route.getOdometerFinalValue()}"></td>
+                <td><a th:if="${routeId == route.getId()}"
+                       th:href="${'/routes/end'}"
+                       th:text="#{route.end.title}"
+                       class="btn btn-danger">Finalizar ruta</a></td>
+
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div th:if="${#lists.isEmpty(routes)}"> </div>
+    <footer th:replace="fragments/pagination"/>
+</div>
+<footer th:replace="fragments/footer"/>
+</body>
+</html>

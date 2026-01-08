@@ -1,0 +1,30 @@
+<div th:fragment="vehiclesTable">
+    <table class="table table-hover" id="vehiclesTable">
+        <thead>
+        <tr>
+            <th scope="col"></th>
+            <th scope="col">id</th>
+            <th scope="col" th:text="#{table.vehicle.plate}"></th>
+            <th scope="col" th:text="#{table.vehicle.brand}"></th>
+            <th scope="col" th:text="#{table.vehicle.model}"></th>
+            <th scope="col" th:text="#{table.vehicle.chassisNumber}"></th>
+            <th scope="col" th:text="#{table.vehicle.fuelType}"></th>
+            <th scope="col" th:text="#{table.vehicle.kilometers}">Kilometraje</th>
+            <th scope="col" th:text="#{table.vehicle.status}">Estado</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="vehicle : ${page.content}">
+            <td><input type="checkbox" class="vehicle-checkbox" th:value="${vehicle.id}"/></td>
+            <td scope="row" th:text="${vehicle.id}"></td>
+            <td th:text="${vehicle.plate}"></td>
+            <td th:text="${vehicle.brand}"></td>
+            <td th:text="${vehicle.model}"></td>
+            <td th:text="${vehicle.chassisNumber}"></td>
+            <td th:text="${vehicle.fuelType}"></td>
+            <td th:text="${vehicle.totalKilometers}"></td>
+            <td th:text="${vehicle.status}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,16 @@
+<table class="table table-hover" th:fragment="logsTable" id="logsTable">
+    <thead>
+    <tr>
+        <th th:text="#{log.type}">Tipo</th>
+        <th th:text="#{log.time}">Fecha-hora</th>
+        <th th:text="#{log.desc}">Descripción</th>
+    </tr>
+    </thead>
+    <tbody id="logTableBody">
+    <tr th:each="log : ${logList}">
+        <td th:text="${log.logType}"></td>
+        <td th:text="${log.localDate}"></td>
+        <td th:text="${log.description}"></td>
+    </tr>
+    </tbody>
+</table>

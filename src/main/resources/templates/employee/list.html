@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+<head th:replace="fragments/head"/>
+<body>
+<!-- Barra de Navegación superior -->
+<nav th:replace="fragments/nav"/>
+<div class="container">
+    <h2 th:text="#{employees}"></h2>
+    <p th:text="#{employees.list.message}"></p>
+    <div class="table-responsive">
+        <table class="table table-hover" id="employeesTable">
+            <thead>
+            <tr>
+                <th scope="col">DNI</th>
+                <th scope="col" th:text="#{name}">Nombre</th>
+                <th scope="col" th:text="#{surname}">Apellidos</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="employee : ${employeesList}">
+                <td th:text="${employee.dni}">71888888X</td>
+                <td th:text="${employee.name}">Nombre del empleado</td>
+                <td th:text="${employee.surname}">Apellidos del empleado</td>
+                <td><a th:href="${'/employee/edit/' + employee.id}" th:text="#{modify}">modificar</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <footer th:replace="fragments/pagination"/>
+</div>
+<footer th:replace="fragments/footer"/>
+</body>
+</html>
