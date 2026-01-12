@@ -40,8 +40,7 @@ class Sdi2425Entrega121ApplicationTests {
 
   //Paths
   static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
-  static String Geckodriver = "C:\\SDI\\PL-SDI-Sesión6-material\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
-
+  static String Geckodriver = "C:\\Users\\adria\\Downloads\\PL-SDI-Sesión6-material\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
 
   //Común a Windows y a MACOSX
   static WebDriver driver = getDriver(PathFirefox, Geckodriver);
@@ -607,7 +606,9 @@ class Sdi2425Entrega121ApplicationTests {
     List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
     Assertions.assertEquals(checkText, result.get(0).getText());
     // Comprobamos que el empleado tiene ahora esos datos
-    Employee emp = employeesService.getEmployee(id).get();
+    Employee emp = employeesService.getEmployee(id)
+            .orElseThrow(() -> new RuntimeException("Employee not found"));
+
     Assertions.assertEquals(newDNI, emp.getDni());
     Assertions.assertEquals(newName, emp.getName());
     Assertions.assertEquals(newSurname, emp.getSurname());
@@ -651,7 +652,9 @@ class Sdi2425Entrega121ApplicationTests {
     String idString = currentUrl.substring(currentUrl.lastIndexOf("/") + 1);
     Long id = Long.parseLong(idString);
 
-    Employee originalEmp = employeesService.getEmployee(id).get();
+    Employee originalEmp = employeesService.getEmployee(id)
+            .orElseThrow(() -> new RuntimeException("Employee not found"));
+
     String originalDNI = originalEmp.getDni();
     String originalName = originalEmp.getName();
     String originalSurname = originalEmp.getSurname();
@@ -671,7 +674,9 @@ class Sdi2425Entrega121ApplicationTests {
     Assertions.assertEquals(checkText, result.get(0).getText());
 
     // Comprobamos que el empleado mantiene sus datos originales
-    Employee emp = employeesService.getEmployee(id).get();
+    Employee emp = employeesService.getEmployee(id)
+            .orElseThrow(() -> new RuntimeException("Employee not found"));
+
     Assertions.assertEquals(originalDNI, emp.getDni());
     Assertions.assertEquals(originalName, emp.getName());
     Assertions.assertEquals(originalSurname, emp.getSurname());
@@ -727,9 +732,23 @@ class Sdi2425Entrega121ApplicationTests {
   public void Prueba21BorrarPrimerVehiculo() {
     PO_LogInView.login(driver, "12345678Z", "@Dm1n1str@D0r", "Empleados");
 
+    //Pinchamos en la opción de menú de Vehículos
+    PO_View.checkView(driver,"free","//*[@id=\"navbarDropdown\"]",0);
+    //Esperamos a que aparezca la opción de añadir vehiculo: //*[@id="myNavbar"]/ul[1]/li[2]/div/a[2]
+    PO_View.checkView(driver,"free","//a[contains(@href, 'vehicle/add')]",0);
+    //Ahora vamos a rellenar el formulario con valores correctos
+    String plate = "0123BCQ";
+    String model = "4x4";
+    String brand = "Toyota";
+    String chassisNumber = "KHGCM82633A901230";
+    Vehicle.FuelType type = Vehicle.FuelType.HIBRIDO;
+
+    PO_VehicleView.fillFormAddVehicle(driver, plate, model,brand,chassisNumber,type);
+
     // Ir a la lista de vehículos
     PO_View.checkView(driver, "free", "//*[@id=\"navbarDropdown\"]", 0);
     PO_View.checkView(driver, "free", "//a[contains(@href, 'vehicle/list')]", 0);
+
 
     // Obtener la lista de vehículos antes de eliminar
     List<WebElement> checkboxes = PO_VehicleView.getVehicleCheckboxes(driver);
@@ -1210,10 +1229,6 @@ class Sdi2425Entrega121ApplicationTests {
       int routesThisPage = rows.size() - 1;
       Assertions.assertTrue(routesThisPage <= 5);
 
-      // Recorremos las rutas (omitimos el encabezado)
-      for (int i = 1; i < rows.size(); i++) {
-        List<WebElement> cols = rows.get(i).findElements(By.tagName("td"));
-      }
 
 
       // Intentar avanzar de página si hay botón "nextPage"
@@ -1284,9 +1299,7 @@ class Sdi2425Entrega121ApplicationTests {
       Assertions.assertTrue(routesThisPage <= 5);
 
       // Recorremos las rutas (omitimos el encabezado)
-      for (int i = 1; i < rows.size(); i++) {
-        List<WebElement> cols = rows.get(i).findElements(By.tagName("td"));
-      }
+
 
 
       // Intentar avanzar de página si hay botón "nextPage"
@@ -1360,9 +1373,7 @@ class Sdi2425Entrega121ApplicationTests {
       Assertions.assertTrue(routesThisPage <= 5);
 
       // Recorremos las rutas (omitimos el encabezado)
-      for (int i = 1; i < rows.size(); i++) {
-        List<WebElement> cols = rows.get(i).findElements(By.tagName("td"));
-      }
+
 
 
       // Intentar avanzar de página si hay botón "nextPage"

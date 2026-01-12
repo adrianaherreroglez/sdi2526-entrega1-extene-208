@@ -15,17 +15,6 @@ public class SeleniumUtils {
 
 
   /**
-   * Aborta si el "texto" no está presente en la página actual
-   * @param driver: apuntando al navegador abierto actualmente.
-   * @param text: texto a buscar
-   */
-  static public void textIsPresentOnPage(WebDriver driver, String text)
-  {
-    List<WebElement> list = driver.findElements(By.xpath("//*[contains(text(),'" + text + "')]"));
-    Assertions.assertTrue(list.size() > 0, "Texto " + text + " no localizado!");
-  }
-
-  /**
    * Aborta si el "texto" está presente en la página actual
    * @param driver: apuntando al navegador abierto actualmente.
    * @param text: texto a buscar
@@ -34,20 +23,6 @@ public class SeleniumUtils {
   {
     List<WebElement> list = driver.findElements(By.xpath("//*[contains(text(),'" + text + "')]"));
     Assertions.assertEquals(0, list.size(), "Texto " + text + " no está presente !");
-  }
-
-  /**
-   * Aborta si el "texto" está presente en la página actual tras timeout segundos.
-   * @param driver: apuntando al navegador abierto actualmente.
-   * @param text: texto a buscar
-   * @param timeout: el tiempo máximo que se esperará por la aparición del texto a buscar
-   */
-  static public void waitTextIsNotPresentOnPage(WebDriver driver, String text, int timeout)
-  {
-    Boolean resultado =
-        (new WebDriverWait(driver, Duration.ofSeconds(timeout))).until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//*[contains(text(),'" + text + "')]")));
-
-    Assertions.assertTrue(resultado);
   }
 
 
@@ -78,44 +53,16 @@ public class SeleniumUtils {
    */
   static public List<WebElement> waitLoadElementsBy(WebDriver driver, String criterio, String text, int timeout)
   {
-    String searchCriterio;
-    switch (criterio) {
-      case "id":
-        searchCriterio = "//*[contains(@id,'" + text + "')]";
-        break;
-      case "class":
-        searchCriterio = "//*[contains(@class,'" + text + "')]";
-        break;
-      case "text":
-        searchCriterio = "//*[contains(text(),'" + text + "')]";
-        break;
-      case "free":
-        searchCriterio = text;
-        break;
-      default:
-        searchCriterio = "//*[contains(" + criterio + ",'" + text + "')]";
-        break;
-    }
+    String searchCriterio = switch (criterio) {
+        case "id" -> "//*[contains(@id,'" + text + "')]";
+        case "class" -> "//*[contains(@class,'" + text + "')]";
+        case "text" -> "//*[contains(text(),'" + text + "')]";
+        case "free" -> text;
+        default -> "//*[contains(" + criterio + ",'" + text + "')]";
+    };
 
-    return waitLoadElementsByXpath(driver, searchCriterio, timeout);
+      return waitLoadElementsByXpath(driver, searchCriterio, timeout);
   }
 
 
-  /**
-   * PROHIBIDO USARLO PARA VERSIÓN FINAL.
-   * Esperar "segundos" durante la ejecucion del navegador
-   * @param driver: apuntando al navegador abierto actualmente.
-   * @param seconds: Segundos de bloqueo de la ejecución en el navegador.
-   */
-  static public void waitSeconds(WebDriver driver, int seconds){
-
-    //noinspection SynchronizationOnLocalVariableOrMethodParameter
-    synchronized(driver){
-      try {
-        driver.wait(seconds * 1000L);
-      } catch (InterruptedException e) {
-        e.printStackTrace();
-      }
-    }
-  }
 }
