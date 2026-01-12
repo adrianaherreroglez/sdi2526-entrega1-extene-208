@@ -1,16 +1,15 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="fragments/head"/>
+<head th:replace="fragments/head"><title>"#{route.list}"</title></head>
 
 <body>
-<nav th:replace="fragments/nav"/>
+<nav th:replace="fragments/nav"></nav>
 
 <div class="container" id="main-container">
     <h2 th:text="#{route.list}"></h2>
     <p th:text="#{route.list.p1}"> </p>
-    <div class="table-responsive" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+    <div class="table-responsive">
         <table class="table table-hover" id="routesForEmployeeTable">
             <thead>
             <tr>
@@ -28,7 +27,7 @@
                 <td th:text="${route.id}"></td>
                 <td th:text="${route.getStartTime()}"></td>
                 <td th:text="${route.getVehicle().getPlate()}"></td>
-                <td th:text="${route.getDuration()}"></td>
+                <td th:text="${route.getFormattedDuration()}"></td>
                 <td th:text="${route.getOdometerInitValue()}"></td>
                 <td th:text="${route.getOdometerFinalValue()}"></td>
                 <td><a th:if="${routeId == route.getId()}"
@@ -41,8 +40,8 @@
         </table>
     </div>
     <div th:if="${#lists.isEmpty(routes)}"> </div>
-    <footer th:replace="fragments/pagination"/>
+    <footer th:replace="fragments/pagination"></footer>
 </div>
-<footer th:replace="fragments/footer"/>
+<footer th:replace="fragments/footer"></footer>
 </body>
 </html>

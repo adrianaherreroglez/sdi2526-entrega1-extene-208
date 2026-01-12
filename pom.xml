@@ -9,11 +9,11 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.uniovi</groupId>
-    <artifactId>sdi2425-entrega1-21</artifactId>
+    <artifactId>sdi2526-entrega1-21</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>war</packaging>
-    <name>sdi2425-entrega1-21</name>
-    <description>sdi2425-entrega1-21</description>
+    <name>sdi2526-entrega1-21</name>
+    <description>sdi2526-entrega1-21</description>
     <url/>
     <licenses>
         <license/>

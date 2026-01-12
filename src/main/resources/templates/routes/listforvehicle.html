@@ -2,10 +2,10 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
-<head th:replace="fragments/head"/>
+<head th:replace="fragments/head"><title>#{route.vehiclelist.title}</title></head>
 
 <body>
-<nav th:replace="fragments/nav"/>
+<nav th:replace="fragments/nav"></nav>
 
 <div class="container" id="main-container">
     <h2 th:text="#{route.vehiclelist.title}"></h2>
@@ -34,8 +34,8 @@
         </table>
     </div>
     <div th:if="${#lists.isEmpty(routes)}"> </div>
-    <footer th:replace="fragments/pagination"/>
+    <footer th:replace="fragments/pagination"></footer>
 </div>
-<footer th:replace="fragments/footer"/>
+<footer th:replace="fragments/footer"></footer>
 </body>
 </html>
